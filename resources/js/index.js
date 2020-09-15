@@ -7,11 +7,12 @@ const serverURL = `https://it3049c-chat-application.herokuapp.com/messages`;
 const MILLISECONDS_IN_TEN_SECONDS = 10000;
 //URL to the Server is https://it3049c-chat-application.herokuapp.com
 //URL to the link to get the messages is https://it3049c-chat-application.herokuapp.com/messages
+//let request = require("request-promise");
 
 
 function updateMessagesInChatBox() {
   this.fetchMessages();
-  this.formatMessages();
+  this.formatMessage();
   this.updateChatBox();
 };
 
@@ -20,8 +21,8 @@ function fetchMessages() {
   return fetch(serverURL)
     .then(response => response.json()) // (function (reseponse) {return response.json})
   //.catch(error => alter('Wrong'))
-
 };
+
 
 function formatMessage(message, myName) {
   const time = new Date(message.timestamp);
@@ -56,23 +57,24 @@ function formatMessage(message, myName) {
 
 function updateChatBox() {
   //Add the formatted messages to the chatbox
+  this.updateMessages();
   //clear and the chatbox and insert the newly formatted messages.
+  chatBox.textContent = " ";
 };
 
 
 async function updateMessages() {
-
   // Fetch Messages
   const messages = await fetchMessages();
   console.log(messages);
+  let formattedMessages = "";
   // Loop over the messages. Inside the loop we will
   // get each message
-  // format it
-  // add it to the chatbox
-  let formattedMessages = "";
   messages.forEach(message => {
+    // format it
     formattedMessages += formatMessage(message, nameInput.value);
   });
+  // add it to the chatbox
   chatBox.innerHTML = formattedMessages;
 };
 
@@ -105,6 +107,7 @@ function sendMessages(username, text) {
     $.post(serverURL, newMessage);
 }
  */
+
 sendButton.addEventListener("click", function (sendButtonClickEvent) {
   sendButtonClickEvent.preventDefault();
   const sender = nameInput.value;
@@ -116,9 +119,13 @@ sendButton.addEventListener("click", function (sendButtonClickEvent) {
 
 refButton.addEventListener("click", function (refreshButtonClickEvent) {
   //window.location.reload(true);
+  refreshButtonClickEvent.preventDefault();
+  //updateMessagesInChatBox();
+  updateChatBox();
+  //console.log();
 });
 
 
-
+//updateMessagesInChatBox();
 updateMessages();
 setInterval(updateMessages, MILLISECONDS_IN_TEN_SECONDS);
