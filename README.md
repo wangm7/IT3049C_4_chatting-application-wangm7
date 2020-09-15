@@ -5,7 +5,7 @@ Chatting Application
 Instructions to this assignment can be found [here](#).
 
 ## Checklist:
-- [ ] update the assignment checks above to the correct link.
+- [x] update the assignment checks above to the correct link.
 - [ ] make sure the assignment checks pass
 - [ ] fill out the self evaluation and Reflection
 - [ ] submit the repository link on Canvas
